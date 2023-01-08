@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>How to add multiple markers on google maps javascript</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5u7o6T_p7vjh6X8Ekkp0bjTJZfbiOpXA &callback=initialize" async defer></script>
+
+
+    <script type="text/javascript">
+        var locations = [
+            ['Chhatrapati Shivaji Maharaj Terminus', 18.9448695	,72.8336721, 1],
+            ['The Gateway Of India', 18.9203886,	72.8301306, 2],
+            ['Churchgate', 18.9357166	,72.827397, 3],
+            ['Bombay High Court', 18.932217	,72.83192, 4],
+            ['Rajabai Clock Tower', 18.9295797	,72.8296869, 5],
+            ['Flora Fountain', 18.9318651,	72.8313275, 6],
+			['Shree Siddhivinayak Ganapati Mandir',19.0183159,	72.8328402,7],
+			['Taraporewala Aquarium',18.9520025	,72.8180364,8],
+			['Shri Mahalakshmi Mandir',18.9764111,	72.8081096,9],
+			['Flim City',19.1636176	,72.8854316, 10],
+			['Essel World',19.2390897,	72.8027211,11]
+        ];
+
+        function InitMap() {
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: new google.maps.LatLng(18.932217	,72.83192),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker, i;
+
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map
+                });
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+        }
+    </script>
+</head>
+<body onload="InitMap();">
+    <h1>Show multiple locations on Google Maps using JavaScript</h1>
+    <div id="map" style="height: 500px; width: auto;">
+    </div>
+    <br></br>
+  <footer id="footer">
+    <ul class="icons">
+      <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+      <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+      <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+      <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+      <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+      <li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+    </ul>
+    <ul class="copyright">
+      <li>&copy; Web3athon Titan Hackathon. All rights reserved.</li>
+    </ul>
+  </footer>
+</body>
+</html>
+
+

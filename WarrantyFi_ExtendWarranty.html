@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Extend/Reduce Warranty</title>
+  <!-- <link rel="stylesheet" type="text/css"
+    href="https://storage.googleapis.com/chart-api-db/CDN/deps/opt/bootstrap.css" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/landingassets/css/main.css" />
+</head>
+
+<body>
+  <div id="page-wrapper">
+    <div id="header">
+      <!-- Nav -->
+      <nav id="nav" style="margin-top: -57px;">
+        <ul>
+          <li><a href="WarrantyFi.html">Home</a></li>
+          <li>
+            <a href="#" class="icon solid fa-angle-down"> Manufacturers</a>
+            <ul>
+              <li><a href="WarrantyFi_Manufacturers.html">Manage Manufacturers</a></li>
+              <li><a href="WarrantyFi_Products.html">Manage Products</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="icon solid fa-angle-down"> Visits</a>
+            <ul>
+              <li><a href="WarrantyFi_ManageVisits.html">Manage Visits</a></li>
+              <li><a href="WarrantyFi_ScheduleVisits.html">Schedule Visits</a></li>
+            </ul>
+          </li>
+          <li class="current"><a href="WarrantyFi_ExtendWarranty.html">Extend/Pre-Close Warranty</a></li>
+
+          <li><a href="Contact.html">Contact</a></li>
+          <!-- <li><a href="#" class="button">Sign In</a></li> -->
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+  <div class="container">
+    <!-- <div style="margin-top: 30px;">
+      <ol style="background-color:rgb(252, 114, 86); font-size: larger;color: black;">
+
+        <b><i>!!! Sustainability is a key initiative for the conservation of climate !!!</i></b><br>
+        <b><u>The amount collected will be used to pay vendors to maintain a greener environment.</b></u>
+      </ol>
+
+    </div> -->
+    <button class="btn btn-primary my-3" onclick="sendPaymentBtn()">Extend Warranty with XDC</button>
+    <button class="btn btn-primary my-3" id="findbtn" onclick="handleSearch()">Pre-Close Warranty</button>
+
+    <form id="searchForm" style="display: none;"></form>
+    <form id="paymentForm" style="display: none;"></form>
+    <form id="qrCode" style="display: none;"></form>
+    <pre id="myText" style="display: none;"></pre>
+    <button id="approveBtn" class="btn btn-primary my-3" style="display: none;" onclick="approveBtn(donut)">Approve
+      Payment</button>
+    <div id="feedbackGrid" class="mt-3"></div>
+  </div>
+  <br></br>
+  <footer id="footer">
+    <ul class="icons">
+      <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+      <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+      <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+      <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+      <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+      <li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+    </ul>
+    <ul class="copyright">
+      <li>&copy; Buidl the Future: A Global Hack for Web3 (XDC). All rights reserved.</li>
+    </ul>
+  </footer>
+
+  <div id="res" class="alert"></div>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/jquery.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/jquery.dropotron.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/jquery.scrollex.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/browser.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/breakpoints.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/util.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/main.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/deps/underscore.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/deps/opt/jsv.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/lib/jsonform.js"></script>
+  <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+  <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
+  <script type="text/javascript">
+    var donut = "";
+    var amount = localStorage.getItem("outOfWarrantyServiceCost");
+    document.addEventListener("DOMContentLoaded", _ => {
+      $('#feedbackGrid').hide();
+
+      var paramsObj = {}
+      paramsObj.type = "Ripple";
+      paramsObj.queryType = "txhistory";
+      paramsObj.account = "rwRixyDvKsYRCxiov8g3WE8PXRyH1AYkT8";
+      paramsObj.record = {};
+
+      let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(paramsObj)
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+
+          grid = new ej.grids.Grid({
+
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            allowPaging: true,
+            enableVirtualization: true,
+            toolbar: ['Search'],
+            filterSettings: { type: 'Menu' },
+            selectionSettings: { persistSelection: true, type: "Multiple", checkboxOnly: true },
+            enableHover: false,
+            enableHeaderFocus: true,
+            pageSettings: { pageCount: 4, pageSizes: true },
+            height: 300,
+            rowHeight: 38,
+            columns: [
+              { field: 'TransactionType', headerText: 'Transaction Type' },
+              { field: 'date', headerText: 'Date' },
+              { field: 'Amount', headerText: 'Amount value' },
+              { field: 'Type', headerText: 'Type' },
+              { field: 'Account', headerText: 'From' },
+              { field: 'Destination', headerText: 'To' },
+
+              { field: 'Fee', headerText: 'Fee' },
+              { field: 'Sequence', headerText: 'Sequence' },
+              // { field: 'TxnSignature', headerText: 'Txn Signature' },
+              { field: 'hash', headerText: 'Hash', visible: false },
+              { field: 'ledger_index', headerText: 'ledger_index', visible: false },
+
+              {
+                headerText: 'Hash', width: 100,
+                commands: [{ type: 'Edit', buttonOption: { iconCss: ' e-icons e-hyperlink-open', cssClass: 'e-flat' } }]
+              }
+            ],
+            commandClick: (args) => {
+              debugger
+              if (args.commandColumn.type == "Edit") {
+                //handleUpdateFeedback();
+
+                var hash = `${args.rowData.hash}`
+                window.open("https://testnet.xrpl.org/transactions/" + hash, "_blank");
+              }
+            }
+
+          });
+          grid.appendTo('#feedbackGrid');
+        });
+
+    });
+
+    sendPaymentBtn = () => {
+      let insertFormEle = document.querySelector("#paymentForm");
+      insertFormEle.style.display = insertFormEle.style.display == "none" ? "" : "none";
+
+      $('#feedbackGrid').hide();
+      $('#searchForm').hide();
+      $('#paymentForm').html("");
+      let newUuid = uuidv4();
+      $('#paymentForm').jsonForm({
+        schema: {
+          ID: {
+            type: 'string',
+            readonly: true
+          },
+          Date: {
+            type: 'string',
+            required: true,
+          },
+          Status: {
+            type: 'string',
+            title: "Enter Current State",
+            default: "Warranty Extended",
+            enum: ["Scheduled", 'Repaired', 'Defective', 'Warranty Extended', 'Abandoned'],
+            readonly: true,
+          },
+
+          Name: {
+            type: 'string',
+            title: 'Enter Name',
+            required: true
+          },
+          Address: {
+            type: 'string',
+            title: 'Enter Address',
+            required: true
+          },
+          Purpose: {
+            type: 'string',
+            title: 'Enter Purpose',
+            required: true
+          },
+          Assignee: {
+            type: 'string',
+            title: 'Enter Assignee',
+            required: true
+          },
+          Years: {
+            type: 'integer',
+            title: "Enter Years to Extend",
+            default: 1,
+            enum: [1, 2, 3, 4, 5],
+
+          },
+
+          Amount: {
+            type: 'number',
+            title: 'Enter Amount to Pay',
+            required: true
+          }
+        },
+        value: {
+          ID: localStorage.getItem("id"),
+          Date: localStorage.getItem("date"),
+          // Status: localStorage.getItem("status"),
+          Name: localStorage.getItem("name"),
+          Address: localStorage.getItem("address"),
+          Purpose: localStorage.getItem("purpose"),
+          Assignee: localStorage.getItem("assignee"),
+
+
+        },
+        form: [
+          {
+            key: "ID",
+            type: "text",
+
+          }, {
+            key: "Date",
+            type: "text",
+
+          },
+          {
+            key: "Status",
+            fieldHtmlClass: "bg-warning"
+          },
+          {
+            key: "Name",
+            type: "text",
+
+          },
+          {
+            key: "Address",
+            type: "text",
+
+          },
+          {
+            key: "Purpose",
+            type: "text",
+
+          },
+          {
+            key: "Assignee",
+            type: "text",
+
+          }, {
+            key: "Years",
+          },
+
+          {
+            key: "Amount",
+            type: "text",
+            fieldHtmlClass: "bg-light"
+          },
+          {
+            type: "submit",
+            title: "Extend Warranty"
+          }
+        ],
+        onSubmit: function (errors, values) {
+          if (errors) {
+            $('#res').html('<p>Please fill required fields!</p>');
+          }
+          else {
+            console.log(values);
+
+
+            var queryObj = {}
+            var queries = [];
+            queryObj.type = "CreateAppointment";
+            queryObj.bucketName = "chart-api-db";
+            queryObj.dbName = "SchedulingRouting.db";
+            queryObj.tabName = "Appointments";
+            queryObj.queries = [];
+            queries.push("UPDATE Appointments SET Date = '" + values.Date + "',Name = '" + values.Name + "',Address = '" + values.Address + "' ,Purpose = '" + values.Purpose + "',Assignee = '" + values.Assignee + "',Status = '" + values.Status + "',Amount = '" + values.Amount + "' WHERE ID =" + values.ID);
+            queryObj.queries = queries;
+            var finalParams = JSON.stringify(queryObj);
+            debugger
+
+
+            let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(queryObj);
+            fetch(url)
+              .then(response => response.text())
+              .then(data => {
+                // alert(data);
+                confirm("Confirm Payment Of Amount : " + values.Amount);
+            
+                showModalPopUp();
+                
+
+              })
+
+          }
+        }
+      });
+
+    }
+
+    handleUpdateFeedback = () => {
+      let updateFormEle = document.querySelector("#paymentForm");
+      updateFormEle.style.display = updateFormEle.style.display == "none" ? "" : "none";
+    }
+
+    approveBtn = (donut) => {
+      window.open(donut, "_blank");
+    }
+
+    handleSearch = () => {
+      let insertFormEle = document.querySelector("#searchForm");
+      insertFormEle.style.display = insertFormEle.style.display == "none" ? "" : "none";
+      $('#insertForm').hide();
+      $('#paymentForm').hide();
+      $('#searchForm').html("");
+      let newUuid = uuidv4();
+      $('#searchForm').jsonForm({
+        schema: {
+          ID: {
+            type: 'string',
+            readonly: true
+          },
+          Date: {
+            type: 'string',
+            required: true,
+          },
+          Status: {
+            type: 'string',
+            title: "Enter Current State",
+            default: "Defective",
+            enum: ["Scheduled", 'Repaired', 'Defective', 'Warranty Extended', 'Abandoned'],
+            required: true,
+          },
+          Name: {
+            type: 'string',
+            title: 'Enter Name',
+            required: true
+          },
+          Address: {
+            type: 'string',
+            title: 'Enter Address',
+            required: true
+          },
+          Purpose: {
+            type: 'string',
+            title: 'Enter Purpose',
+            required: true
+          },
+          Assignee: {
+            type: 'string',
+            title: 'Enter Assignee',
+            required: true
+          },
+          Years: {
+            type: 'integer',
+            title: "Enter Years to Reduce",
+            default: 1,
+            enum: [1, 2, 3, 4, 5],
+
+          },
+
+          Amount: {
+            type: 'number',
+            title: 'Enter Amount to Refund',
+            required: true
+          }
+        },
+        value: {
+          ID: localStorage.getItem("id"),
+          Date: localStorage.getItem("date"),
+          // Status: localStorage.getItem("status"),
+          Name: localStorage.getItem("name"),
+          Address: localStorage.getItem("address"),
+          Purpose: localStorage.getItem("purpose"),
+          Assignee: localStorage.getItem("assignee"),
+
+
+        },
+        form: [
+          {
+            key: "ID",
+            type: "text",
+
+          }, {
+            key: "Date",
+            type: "text",
+
+          },
+          {
+            key: "Status",
+            fieldHtmlClass: "bg-warning"
+          },
+          {
+            key: "Name",
+            type: "text",
+
+          },
+          {
+            key: "Address",
+            type: "text",
+
+          },
+          {
+            key: "Purpose",
+            type: "text",
+
+          },
+          {
+            key: "Assignee",
+            type: "text",
+
+          },
+          {
+            key: "Years",
+          },
+          {
+            key: "Amount",
+            type: "text",
+            fieldHtmlClass: "bg-light"
+          },
+          {
+            type: "submit",
+            title: "Refund With XDC"
+          }
+        ],
+        onSubmit: function (errors, values) {
+          if (errors) {
+            $('#res').html('<p>Please fill required fields!</p>');
+          }
+          else {
+            console.log(values);
+
+            confirm("You are eligible only for Refund of Partial Amount \nConfirm Payment Of Amount : " + values.Amount + "\nDo you want to Proceed?");
+            var queryObj = {}
+            var queries = [];
+            queryObj.type = "CreateAppointment";
+            queryObj.bucketName = "chart-api-db";
+            queryObj.dbName = "SchedulingRouting.db";
+            queryObj.tabName = "Appointments";
+            queryObj.queries = [];
+            queries.push("UPDATE Appointments SET Date = '" + values.Date + "',Name = '" + values.Name + "',Address = '" + values.Address + "' ,Purpose = '" + values.Purpose + "',Assignee = '" + values.Assignee + "',Status = '" + values.Status + "',Amount = '" + values.Amount + "' WHERE ID =" + values.ID);
+            queryObj.queries = queries;
+            var finalParams = JSON.stringify(queryObj);
+            debugger
+
+
+            let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(queryObj);
+            fetch(url)
+              .then(response => response.text())
+              .then(data => {
+                // alert(data);
+                // confirm("Confirm Payment Of Amount : " + values.Amount);
+                showModalPopUp();
+              })
+          }
+        }
+      });
+
+    }
+    var popUpObj;
+
+		function showModalPopUp() {
+
+			popUpObj = window.open("https://poc-grat360-oht19978u4-114986.ue.r.appspot.com/", "ModalPopUp","location=no," +"width=400,"+ "height=300"+ "right = 490," + "left = 490," +"top=200");
+
+			popUpObj.focus();
+
+			LoadModalDiv();
+
+		}
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Create an Appointment</title>
+  <!-- <link rel="stylesheet" type="text/css"
+    href="https://storage.googleapis.com/chart-api-db/CDN/deps/opt/bootstrap.css" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body>
+  <div id="page-wrapper">
+    <header id="header" class="alt" style="background-color: black;">
+      <h1 style="margin-top: 3px;"><a href="Supplier_Landing.html"><img src="images/Logo.png" style="width:50%"></img>
+      </h1>
+      <nav id="nav">
+        <ul>
+          <li><a href="Register_Disaster.html">Register Disaster</a></li>
+          <li>
+            <a href="#" class="icon solid fa-angle-down">Help a child</a>
+            <ul>
+              <li><a href="Register_MissingKid.html">Register Missing Child</a></li>
+              <li><a href="Transact360_ShowMissingChild.html">Search Missing Child</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="icon solid fa-angle-down">Donate</a>
+            <ul>
+              <li><a href="Transact360_Donations.html">Donate as Ripples</a></li>
+              <li><a href="Transact360_XRPLTransaction.html">List Transactions</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="icon solid fa-angle-down">Register</a>
+            <ul>
+              <li><a href="Register_Agency.html">Register Agency</a></li>
+              <li><a href="Register_GovtOfficial.html">Register as Govt Official</a></li>
+              <li><a href="Register_Victim.html">Register as Victim</a></li>
+              <li><a href="Register_Volunteer.html">Register as Volunteer</a></li>
+            </ul>
+          </li>
+          <li><a href="Titan_Contact.html">Contact</a></li>
+          <!-- <li><a href="#" class="button">Sign In</a></li> -->
+        </ul>
+      </nav>
+    </header>
+  </div>
+  <div class="container">
+    <div style="
+    margin-top: 10px;
+    height: 60px;">
+      <label style="background-color:antiquewhite">
+        Disaster Registration Form Details to be filled like Disaster Name, Areas Affected, Contact Name, Help.
+      </label>
+    </div>
+    <button class="btn btn-primary my-3" onclick="handleInsertBtn()">Insert Data</button>
+    <form id="insertForm" style="display: none;"></form>
+    <form id="updateForm" style="display: none;"></form>
+    <div id="dataGrid" class="mt-3"></div>
+  </div>
+  <br></br>
+  <footer id="footer">
+    <ul class="icons">
+      <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+      <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+      <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+      <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+      <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+      <li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+    </ul>
+    <ul class="copyright">
+      <li>&copy; Web3athon Titan Hackathon. All rights reserved.</li>
+    </ul>
+  </footer>
+
+  <div id="res" class="alert"></div>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/jquery.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/jquery.dropotron.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/jquery.scrollex.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/browser.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/breakpoints.min.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/util.js"></script>
+  <script src="https://storage.googleapis.com/chart-api-db/assets/js/main.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/deps/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/deps/underscore.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/deps/opt/jsv.js"></script>
+  <script type="text/javascript" src="https://storage.googleapis.com/chart-api-db/CDN/lib/jsonform.js"></script>
+  <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+  <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", _ => {
+
+      var selObj = {}
+      selObj.type = "GetAppointments";
+      selObj.bucketName = "chart-api-db";
+      selObj.dbName = "SchedulingRouting.db";
+      selObj.tabName = "Appointments";
+      let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(selObj)
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          grid = new ej.grids.Grid({
+            dataSource: data,
+            allowSelection: true,
+            allowFiltering: true,
+            allowSorting: true,
+            allowPaging: true,
+            enableVirtualization: true,
+            toolbar: ['Search'],
+            filterSettings: { type: 'Menu' },
+            selectionSettings: { persistSelection: true, type: "Multiple", checkboxOnly: true },
+            enableHover: false,
+            enableHeaderFocus: true,
+            pageSettings: { pageCount: 4, pageSizes: true },
+            height: 300,
+            rowHeight: 38,
+            columns: [
+              { field: 'ID', headerText: 'ID' },
+              { field: 'Date', headerText: 'Date' },
+              { field: 'Status', headerText: 'Current State' },
+              { field: 'Name', headerText: 'Name' },
+              { field: 'Address', headerText: 'Address' },
+              { field: 'Purpose', headerText: 'Purpose' },
+              { field: 'Assignee', headerText: 'Assignee' },
+              {
+                headerText: 'Action', width: 160,
+                commands: [{ type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
+                { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } }]
+              }
+            ],
+            commandClick: (args) => {
+              debugger
+              if (args.commandColumn.type == "Edit") {
+                //handleUpdateFeedback();
+                let updateFormEle = document.querySelector("#updateForm");
+                updateFormEle.style.display = "";
+                $('#updateForm').html("");
+                $('#updateForm').jsonForm({
+                  schema: {
+                    ID: {
+                      type: 'string',
+                      readonly: true
+                    },
+                    Date: {
+                      type: 'string',
+                      required: true,
+                    },
+                    Status: {
+                      type: 'string',
+                      title:"Enter Current State",
+                      enum:["Scheduled",'Repaired','Defective','Warranty Extended','Abandoned'],
+                      required: true,
+                    },
+                    Name: {
+                      type: 'string',
+                      title: 'Enter Name',
+                      required: true
+                    },
+                    Address: {
+                      type: 'string',
+                      title: 'Enter Address',
+                      required: true
+                    },
+                    Purpose: {
+                      type: 'string',
+                      title: 'Enter Purpose',
+                      required: true
+                    },
+                    Assignee: {
+                      type: 'string',
+                      title: 'Enter Assignee',
+                      required: true
+                    }
+                  },
+                  value: {
+                    ID: `${args.rowData.ID}`,
+                    Date: `${args.rowData.Date}`,
+                    Status: `${args.rowData.Status}`,
+                    Name: `${args.rowData.Name}`,
+                    Address: `${args.rowData.Address}`,
+                    Purpose: `${args.rowData.Purpose}`,
+                    Assignee: `${args.rowData.Assignee}`
+                  },
+                  form: [
+                    {
+                      key: "ID",
+                      type: "text"
+                    }, {
+                      key: "Date",
+                      type: "text"
+                    },
+                    {
+                      key: "Status"
+                    },
+                    {
+                      key: "Name",
+                      type: "text"
+                    },
+                    {
+                      key: "Address",
+                      type: "text"
+                    },
+                    {
+                      key: "Purpose",
+                      type: "text"
+                    },
+                    {
+                      key: "Assignee",
+                      type: "text"
+                    },
+                    {
+                      type: "submit",
+                      title: "Update"
+                    }
+                  ],
+                  onSubmit: function (errors, values) {
+                    if (errors) {
+                      $('#res').html('<p>Please fill required fields!</p>');
+                    }
+                    else {
+                      console.log(values);
+
+
+                      var queryObj = {}
+                      var queries = [];
+                      queryObj.type = "CreateAppointment";
+                      queryObj.bucketName = "chart-api-db";
+                      queryObj.dbName = "SchedulingRouting.db";
+                      queryObj.tabName = "Appointments";
+                      queryObj.queries = [];
+                      queries.push("UPDATE Appointments SET Date = '" + values.Date + "',Name = '" + values.Name + "',Address = '" + values.Address + "' ,Purpose = '" + values.Purpose + "',Assignee = '" + values.Assignee+ "',Status = '" + values.Status + "' WHERE ID =" + values.ID);
+                      queryObj.queries = queries;
+                      var finalParams = JSON.stringify(queryObj);
+                      debugger
+
+
+                      let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(queryObj);
+                      fetch(url)
+                        .then(response => response.text())
+                        .then(data => {
+                          alert(data);
+                          var fetchObj = {};
+                          fetchObj.type = "GetAppointments";
+                          fetchObj.tabName = "Appointments";
+                          fetchObj.bucketName = "chart-api-db";
+                          fetchObj.dbName = "SchedulingRouting.db";
+
+                          let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(fetchObj);
+                          fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                              grid.dataSource = data;
+                              //handleUpdateFeedback();
+                              updateFormEle.style.display = "none";
+                            })
+                        })
+                    }
+                  }
+                });
+              }
+              else {
+                var confirmDel = confirm("Are you sure to delete record " + args.rowData.ID);
+                if (confirmDel == true) {
+
+                  debugger
+                  var delObj = {}
+                  delObj.type = "DeleteAppointment";
+                  delObj.bucketName = "chart-api-db";
+                  delObj.dbName = "SchedulingRouting.db";
+                  delObj.tabName = "Appointment";
+                  delObj.delID = args.rowData.ID;
+
+
+
+                  let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(delObj)
+                  fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                      alert(data);
+
+
+                      var fetchObj = {};
+                      fetchObj.type = "GetAppointments";
+                      fetchObj.tabName = "Appointments";
+                      fetchObj.bucketName = "chart-api-db";
+                      fetchObj.dbName = "SchedulingRouting.db";
+
+                      let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(fetchObj)
+                      fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                          grid.dataSource = data;
+                        })
+                    })
+                }
+              }
+            }
+          });
+          grid.appendTo('#dataGrid');
+        });
+
+    });
+
+    handleInsertBtn = () => {
+      let insertFormEle = document.querySelector("#insertForm");
+      insertFormEle.style.display = insertFormEle.style.display == "none" ? "" : "none";
+      $('#insertForm').html("");
+      let newUuid = uuidv4();
+      $('#insertForm').jsonForm({
+        "schema": {
+          "CreateAppointments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "title": "Log Appointment Information",
+              "properties": {
+                "Date": {
+                  "type": "string",
+                  "title": "Date",
+
+                  "description": "Enter Appointment Date in YYYY-MM-DD format"
+                },
+                Status: {
+                      type: 'string',
+                      title:"Enter Current State",
+                      enum:["Scheduled",'Repaired','Defective','Warranty Extended','Abandoned'],
+                      required: true,
+                    },
+                "CustomerName": {
+                  "type": "string",
+                  "title": "CustomerName",
+
+                  "description": "Enter Customer Name"
+
+                },
+                "Address": {
+                  "type": "textarea",
+                  "title": "Address",
+                  "description": "Enter Address"
+
+                },
+                "Purpose": {
+                  "type": "string",
+                  "title": "Purpose",
+                  "description": "Enter Product and Purpose"
+
+                },
+                "Assignee": {
+                  "type": "string",
+                  "title": "Assignee",
+                  "enum": ["--Select--", "Ahmed", "Raju", "Ravi", "Monu", "Mahesh", "Vihaan", "Ayaan", "Anvesh", "Alok", "Ram", "Joseph"],
+                  "description": "Select Agent Name to be assigned"
+
+                }
+              }
+            }
+          }
+        },
+        onSubmit: function (errors, values) {
+          debugger
+          if (errors) {
+            $('#res').html('<p>Please fill required fields!</p>');
+          }
+          else {
+            console.log(values);
+            var queryObj = {}
+            var queries = [];
+            queryObj.type = "CreateAppointment";
+            queryObj.bucketName = "chart-api-db";
+            queryObj.dbName = "SchedulingRouting.db";
+            queryObj.tabName = "Appointments";
+            queryObj.queries = [];
+            $.each(values.CreateAppointments, function (key, value) {
+              debugger
+              queries.push('insert into Appointments(Date,Name,Address,Purpose,Assignee,Status) values (' + "'" + value.Date + "'" + "," + "'" + value.CustomerName + "'" + "," + "'" + value.Address + "'" + "," + "'" + value.Purpose + "'" + "," + "'" + value.Assignee + "'"  + "," + "'" + value.Status + "'"+ ')');
+            });
+            alert(queries)
+            queryObj.queries = queries;
+
+
+
+            let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(queryObj);
+            fetch(url)
+              .then(response => response.text())
+              .then(data => {
+                alert(data);
+                var fetchObj = {};
+                fetchObj.type = "GetAppointments";
+                fetchObj.tabName = "Appointments";
+                fetchObj.bucketName = "chart-api-db";
+                fetchObj.dbName = "SchedulingRouting.db";
+                let url = "https://chart-api-6httuqd2wq-uc.a.run.app?dbParams=" + JSON.stringify(fetchObj);
+                fetch(url)
+                  .then(response => response.json())
+                  .then(data => {
+                    grid.dataSource = data;
+                    handleInsertBtn();
+                  })
+              })
+          }
+        }
+      });
+
+    }
+
+    handleUpdateFeedback = () => {
+      let updateFormEle = document.querySelector("#updateForm");
+      updateFormEle.style.display = updateFormEle.style.display == "none" ? "" : "none";
+    }
+
+  </script>
+</body>
+
+</html>

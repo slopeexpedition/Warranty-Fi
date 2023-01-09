@@ -16,7 +16,8 @@ Our solution targets at bringing in an XDC powered Warranty marketplace for paym
 3. Extended Warranty : Extend warranties with XDC payments
 4. Refunds : Manufacturers can refund for faulty products with XDC
 5. Margins : Increase margins by paying direct and avoiding multiple third party providers
-A web platform for Manufactures, Service agents and customers to interact, track warranties and build trust !
+
+### A web platform for Manufactures, Service agents and customers to interact, track warranties and build trust !
 
 Web Portal : A web portal powered by Google Cloud App Engine 
 Business Logic : Microservices written in Python power all business rules 

@@ -282,7 +282,7 @@
 								headerText: 'Action',
 								commands: [{ type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
 								{ type: 'Pay/Refund', buttonOption: { iconCss: ' e-icons e-eye', cssClass: 'e-flat', visible: false } },
-									// { type: 'Extend/Reduce Warranty', buttonOption: { iconCss: ' e-icons e-hyperlink-open', cssClass: 'e-flat', visible: false } }
+									{ type: 'Extend/Reduce Warranty', buttonOption: { iconCss: ' e-icons e-hyperlink-open', cssClass: 'e-flat', visible: false } }
 								]
 							}
 						],
@@ -309,7 +309,7 @@
 							localStorage.setItem("purpose", purpose);
 							localStorage.setItem("assignee", assignee);
 							// localStorage.setItem("amount", amount);
-							if (args.commandColumn.type == "Extend/Reduce Warranty" && status != "Abandoned" && status != "Scheduled") {
+							if (args.commandColumn.type == "Extend/Reduce Warranty" && status != "Abandoned" ) {
 								window.open("WarrantyFi_ExtendWarranty.html", "_blank");
 							}
 							else if (args.commandColumn.type == "Pay/Refund" && status != "Abandoned" && status != "Scheduled") {

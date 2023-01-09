@@ -309,10 +309,10 @@
 							localStorage.setItem("purpose", purpose);
 							localStorage.setItem("assignee", assignee);
 							// localStorage.setItem("amount", amount);
-							if (args.commandColumn.type == "Extend/Reduce Warranty" && status != "Abandoned") {
+							if (args.commandColumn.type == "Extend/Reduce Warranty" && status != "Abandoned" && status != "Scheduled") {
 								window.open("WarrantyFi_ExtendWarranty.html", "_blank");
 							}
-							else if (args.commandColumn.type == "Pay/Refund" && status != "Abandoned") {
+							else if (args.commandColumn.type == "Pay/Refund" && status != "Abandoned" && status != "Scheduled") {
 								if (status == "Defective") {
 									let insertFormEle = document.querySelector("#refundForm");
 									insertFormEle.style.display = "";
@@ -479,7 +479,7 @@
 									});
 
 								}
-								else {
+								else if(status == "Repaired" ){
 									let insertFormEle = document.querySelector("#paymentForm");
 									insertFormEle.style.display = "";
 									$("#exampleModalLabel").html("Payment Form: Fill Payment Details");
